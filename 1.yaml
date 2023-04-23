@@ -1,303 +1,243 @@
-port: 7890
+﻿port: 7890
 socks-port: 7891
 allow-lan: true
 mode: Rule
 log-level: info
 external-controller: :9090
 proxies:
-  - {name: Relay_-🇯🇵JP_1010, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 700fc32a-eb57-4dd6-9a89-8c23e34281b4, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1057, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇺🇸US_1002, server: unicom.9299.fp-dns.xyz, port: 22018, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: unicom.9299.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: US_1836, server: 23.105.199.160, port: 23903, type: vmess, uuid: 60b6c1a6-6306-4e28-91d9-8d2be2449ae8, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1043, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1021, server: unicom.9299.fp-dns.xyz, port: 22020, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: unicom.9299.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1042, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1040, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_🇺🇸US-🇦🇺AU_2101, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 968720c1-de02-4f39-b259-036075c3cba0, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: US_1975, server: 23.105.199.160, port: 23166, type: vmess, uuid: f1cda9da-c859-4f26-f609-a2e8837cc9b8, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_994, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: CH_1122, server: 45.90.59.186, port: 10000, type: vmess, uuid: b14bcbcc-ddd4-11ed-ab89-cb7c2de02f9d, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /vpnjantit, ws-headers: {Host: 45.90.59.186}, udp: true}
-  - {name: Relay_-🇯🇵JP_1051, server: awsjp2.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: US_1949, server: 23.105.199.160, port: 37584, type: vmess, uuid: 61914893-393a-4685-fc2d-13328bd8e491, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1050, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 79aea61c-e9f4-416f-a15a-76ab74231a8c, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇲🇬MG_1001, server: iplc.sh.to.us.fp-dns.xyz, port: 34436, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: iplc.sh.to.us.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: US_1968, server: 23.105.199.160, port: 25078, type: vmess, uuid: 964f9b2b-7ff1-4026-d4a9-41b824f4b3bb, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇲🇬MG_1023, server: iplc.sh.to.us.fp-dns.xyz, port: 34437, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: iplc.sh.to.us.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1076, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b183e4fc-f016-4997-b608-48992b69b015, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1091, server: awssg2.untilmu.com, port: 443, type: trojan, password: b22a025c-79f5-4a25-bd38-f3ae9020f1de, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: US_1957, server: 23.105.199.160, port: 27317, type: vmess, uuid: 01832c71-50ac-4891-ae37-1dea8f42ae2d, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1035, server: awssg2.untilmu.com, port: 443, type: trojan, password: 79bf15f2-63f0-4548-bd94-6270c203dd46, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1060, server: awssg2.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1097, server: awssg1.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1077, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b183e4fc-f016-4997-b608-48992b69b015, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1095, server: awssg2.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1030, server: awssg2.untilmu.com, port: 443, type: trojan, password: 5528fdab-83d4-4bb7-b967-d59fcb2a07c8, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1009, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 700fc32a-eb57-4dd6-9a89-8c23e34281b4, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1041, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1039, server: awssg2.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇺🇸US_1003, server: iplc.sh.to.us.fp-dns.xyz, port: 34438, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: iplc.sh.to.us.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1033, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 5528fdab-83d4-4bb7-b967-d59fcb2a07c8, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1084, server: awssg1.untilmu.com, port: 443, type: trojan, password: b22a025c-79f5-4a25-bd38-f3ae9020f1de, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1089, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b22a025c-79f5-4a25-bd38-f3ae9020f1de, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1090, server: awssg2.untilmu.com, port: 443, type: trojan, password: b3f6275a-abb8-4dcc-a0d2-8a7482f29f70, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: US_1823, server: 157.90.4.240, port: 19488, type: ss, cipher: aes-256-cfb, password: e8301e5bd3, udp: true}
-  - {name: _985, server: 142.132.176.71, port: 20, type: vmess, uuid: 0da1d372-ec60-4b89-8a3f-79159438c6f0, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇺🇸US_1024, server: iplc.sh.to.us.fp-dns.xyz, port: 34439, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: iplc.sh.to.us.fp-dns.xyz, skip-cert-verify: true, udp: true}
-  - {name: Relay_🇺🇸US-🇩🇪DE_2055, server: pm.motori.pw, port: 8880, type: vmess, uuid: d1c59699-1874-49f1-b9ba-bbbfd7968075, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /, ws-headers: {Host: pm.motori.pw}, udp: true}
-  - {name: Relay_-🇦🇺AU_1067, server: awsjp1.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: 日本v2, server: v3.erciyun.men, port: 1011, type: vmess, uuid: 03003f34-3762-486e-9277-f71f56108525, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /obb, ws-headers: {Host: v3.erciyun.men}, udp: true}
   - {name: Relay_-🇦🇺AU_1008, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 79bf15f2-63f0-4548-bd94-6270c203dd46, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: github.com/freefq - 美国CloudFlare公司CDN节点 6, server: 104.17.3.81, port: 80, type: vmess, uuid: e40b2de3-b829-4591-a7b6-99d1913f3246, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /worryfree, ws-headers: {Host: w.evouch77.live}, udp: true}
-  - {name: Relay_-🇸🇬SG_1053, server: awssg1.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: 美国【付费推荐：https://v1.mk/vip】7, server: 172.67.84.93, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
-  - {name: 美国【付费推荐：https://v1.mk/vip】12, server: 172.67.86.87, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
-  - {name: "_[PF][家宽]CONTABO-马来西亚Maxis", server: cf.noaries.de, port: 2052, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: csjp.iiio.wiki}, udp: true}
-  - {name: US_2077, server: 3.38.193.73, port: 20, type: vmess, uuid: 0da1d372-ec60-4b89-8a3f-79159438c6f0, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇦🇺AU_1070, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1058, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Netherlands(ChatGPT) 01 TG:@SSRSUB, server: 156.245.8.66, port: 49519, type: vmess, uuid: 5a4d69ad-20a9-4941-b223-87bbd09f5f52, alterId: 64, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: "_[WireGuard][VPN]CONTABO", server: cf.noaries.de, port: 8880, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: csjp.iiio.wiki}, udp: true}
-  - {name: Relay_-🇯🇵JP_1068, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇯🇵JP_1093, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b3f6275a-abb8-4dcc-a0d2-8a7482f29f70, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1051, server: awsjp2.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: Relay_-🇯🇵JP_1094, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 79aea61c-e9f4-416f-a15a-76ab74231a8c, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1036, server: awssg1.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1063, server: awssg2.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: 美国【付费推荐：https://v1.mk/vip】100, server: 172.67.98.34, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
+  - {name: Relay_-🇦🇺AU_1067, server: awsjp1.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: US_1949, server: 23.105.199.160, port: 37584, type: vmess, uuid: 61914893-393a-4685-fc2d-13328bd8e491, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1090, server: awssg2.untilmu.com, port: 443, type: trojan, password: b3f6275a-abb8-4dcc-a0d2-8a7482f29f70, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1064, server: awssg2.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1089, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b22a025c-79f5-4a25-bd38-f3ae9020f1de, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: Relay_-🇸🇬SG_1007, server: awssg2.untilmu.com, port: 443, type: trojan, password: 700fc32a-eb57-4dd6-9a89-8c23e34281b4, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: Relay_-🇦🇺AU_1011, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: "_[原生][商宽]VNPT", server: cf.noaries.de, port: 8880, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: vnpt.iiio.wiki}, udp: true}
-  - {name: _1059, server: 54.37.185.148, port: 32894, type: trojan, password: HchlVCfnXB, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇸🇬SG_1064, server: awssg2.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: Relay_-🇭🇰HK_1020, server: unicom.9299.fp-dns.xyz, port: 22017, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: unicom.9299.fp-dns.xyz, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1077, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b183e4fc-f016-4997-b608-48992b69b015, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: 日本v2, server: v3.erciyun.men, port: 1011, type: vmess, uuid: 03003f34-3762-486e-9277-f71f56108525, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /obb, ws-headers: {Host: v3.erciyun.men}, udp: true}
+  - {name: Relay_-🇯🇵JP_1033, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 5528fdab-83d4-4bb7-b967-d59fcb2a07c8, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1050, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 79aea61c-e9f4-416f-a15a-76ab74231a8c, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: "_[WARP]CONTABO", server: cf.noaries.de, port: 8880, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: contabo-us.iiio.wiki}, udp: true}
+  - {name: Relay_-🇯🇵JP_1042, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1058, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1035, server: awssg2.untilmu.com, port: 443, type: trojan, password: 79bf15f2-63f0-4548-bd94-6270c203dd46, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1009, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 700fc32a-eb57-4dd6-9a89-8c23e34281b4, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1091, server: awssg2.untilmu.com, port: 443, type: trojan, password: b22a025c-79f5-4a25-bd38-f3ae9020f1de, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1060, server: awssg2.untilmu.com, port: 443, type: trojan, password: adde9f2b-d74a-46e4-9ecc-c34f70c9c551, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: US_1836, server: 23.105.199.160, port: 23903, type: vmess, uuid: 60b6c1a6-6306-4e28-91d9-8d2be2449ae8, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: US_1975, server: 23.105.199.160, port: 23166, type: vmess, uuid: f1cda9da-c859-4f26-f609-a2e8837cc9b8, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: _985, server: 142.132.176.71, port: 20, type: vmess, uuid: 0da1d372-ec60-4b89-8a3f-79159438c6f0, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: "_[原生][商宽]VNPT", server: cf.noaries.de, port: 8880, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: vnpt.iiio.wiki}, udp: true}
+  - {name: Relay_-🇸🇬SG_1030, server: awssg2.untilmu.com, port: 443, type: trojan, password: 5528fdab-83d4-4bb7-b967-d59fcb2a07c8, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1095, server: awssg2.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇸🇬SG_1053, server: awssg1.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: "_[WireGuard][VPN]CONTABO", server: cf.noaries.de, port: 8880, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: csjp.iiio.wiki}, udp: true}
+  - {name: US_1968, server: 23.105.199.160, port: 25078, type: vmess, uuid: 964f9b2b-7ff1-4026-d4a9-41b824f4b3bb, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1010, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 700fc32a-eb57-4dd6-9a89-8c23e34281b4, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: "_[PF][家宽]CONTABO-马来西亚Maxis", server: cf.noaries.de, port: 2052, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: csjp.iiio.wiki}, udp: true}
+  - {name: Relay_-🇦🇺AU_1040, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1068, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1057, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b37d3d44-ea18-41cc-986a-82bb7bdba066, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: US_2077, server: 3.38.193.73, port: 20, type: vmess, uuid: 0da1d372-ec60-4b89-8a3f-79159438c6f0, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1093, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b3f6275a-abb8-4dcc-a0d2-8a7482f29f70, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇺🇸US_1024, server: iplc.sh.to.us.fp-dns.xyz, port: 34439, type: trojan, password: f0a9a2e2-0b62-4d46-a97c-c16eb25a88c7, sni: iplc.sh.to.us.fp-dns.xyz, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_994, server: awsjp2.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1076, server: awsjp1.untilmu.com, port: 443, type: trojan, password: b183e4fc-f016-4997-b608-48992b69b015, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: "TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO", server: cf.noaries.de, port: 2082, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: ovh.iiio.wiki}, udp: true}
-  - {name: Relay_-🇸🇬SG_1029, server: awssg1.untilmu.com, port: 443, type: trojan, password: 5528fdab-83d4-4bb7-b967-d59fcb2a07c8, sni: awssg1.untilmu.com, skip-cert-verify: true, udp: true}
-  - {name: _CN_中国 7, server: 36.133.171.209, port: 11023, type: vmess, uuid: 8c042a38-71c1-1dcb-00df-54880236e0dc, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1070, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 15fc79f6-e0ee-478d-80d7-eddc590611b9, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇯🇵JP_1041, server: awsjp2.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awsjp2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Relay_-🇦🇺AU_1043, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 4f26b84f-2795-4879-a08b-7412a0962f29, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: CH_1122, server: 45.90.59.186, port: 10000, type: vmess, uuid: b14bcbcc-ddd4-11ed-ab89-cb7c2de02f9d, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /vpnjantit, ws-headers: {Host: 45.90.59.186}, udp: true}
+  - {name: Relay_🇺🇸US-🇦🇺AU_2101, server: awsjp1.untilmu.com, port: 443, type: trojan, password: 968720c1-de02-4f39-b259-036075c3cba0, sni: awsjp1.untilmu.com, skip-cert-verify: true, udp: true}
   - {name: "_[PF][家宽]OVH-印尼宽带FastNet", server: cf.noaries.de, port: 80, type: vmess, uuid: 6f1d968e-7f41-41fd-931d-73cf35a9f26b, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: "/aries?ed=2048", ws-headers: {Host: ovh.iiio.wiki}, udp: true}
+  - {name: Relay_-🇸🇬SG_1063, server: awssg2.untilmu.com, port: 443, type: trojan, password: 6ad22aa5-1cfe-4dee-994d-a901623356c9, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: 美国【付费推荐：https://v1.mk/vip】100, server: 172.67.98.34, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
+  - {name: 美国【付费推荐：https://v1.mk/vip】12, server: 172.67.86.87, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
+  - {name: Relay_-🇸🇬SG_1039, server: awssg2.untilmu.com, port: 443, type: trojan, password: b3112935-2965-4ea4-80a2-118b4db8879d, sni: awssg2.untilmu.com, skip-cert-verify: true, udp: true}
+  - {name: Netherlands(ChatGPT) 01 TG:@SSRSUB, server: 156.245.8.66, port: 49519, type: vmess, uuid: 5a4d69ad-20a9-4941-b223-87bbd09f5f52, alterId: 64, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: _CN_中国 7, server: 36.133.171.209, port: 11023, type: vmess, uuid: 8c042a38-71c1-1dcb-00df-54880236e0dc, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: 美国【付费推荐：https://v1.mk/vip】7, server: 172.67.84.93, port: 80, type: vmess, uuid: 2e496758-950e-4549-8842-d5eec98d9fde, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: ws, ws-path: /shirker, ws-headers: {Host: uk1.scproxy.top}, udp: true}
 proxy-groups:
   - name: 🔰 节点选择
     type: select
     proxies:
       - ♻️ 自动选择
       - 🎯 全球直连
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: ♻️ 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
     proxies:
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: 🎥 NETFLIX
     type: select
     proxies:
       - 🔰 节点选择
       - ♻️ 自动选择
       - 🎯 全球直连
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: ⛔️ 广告拦截
     type: select
     proxies:
@@ -316,75 +256,60 @@ proxy-groups:
       - 🔰 节点选择
       - ♻️ 自动选择
       - 🎯 全球直连
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: 🌏 国内媒体
     type: select
     proxies:
@@ -396,224 +321,179 @@ proxy-groups:
     proxies:
       - 🎯 全球直连
       - 🔰 节点选择
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: 📲 电报信息
     type: select
     proxies:
       - 🔰 节点选择
       - 🎯 全球直连
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: 🍎 苹果服务
     type: select
     proxies:
       - 🔰 节点选择
       - 🎯 全球直连
       - ♻️ 自动选择
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
   - name: 🎯 全球直连
     type: select
     proxies:
@@ -629,75 +509,60 @@ proxy-groups:
       - 🔰 节点选择
       - 🎯 全球直连
       - ♻️ 自动选择
-      - Relay_-🇯🇵JP_1010
-      - Relay_-🇦🇺AU_1057
-      - Relay_-🇺🇸US_1002
-      - US_1836
-      - Relay_-🇦🇺AU_1043
-      - Relay_-🇦🇺AU_1021
-      - Relay_-🇯🇵JP_1042
-      - Relay_-🇦🇺AU_1040
-      - Relay_🇺🇸US-🇦🇺AU_2101
-      - US_1975
-      - Relay_-🇯🇵JP_994
-      - CH_1122
-      - Relay_-🇯🇵JP_1051
-      - US_1949
-      - Relay_-🇦🇺AU_1050
-      - Relay_-🇲🇬MG_1001
-      - US_1968
-      - Relay_-🇲🇬MG_1023
-      - Relay_-🇦🇺AU_1076
-      - Relay_-🇸🇬SG_1091
-      - US_1957
-      - Relay_-🇸🇬SG_1035
-      - Relay_-🇸🇬SG_1060
-      - Relay_-🇸🇬SG_1097
-      - Relay_-🇯🇵JP_1077
-      - Relay_-🇸🇬SG_1095
-      - Relay_-🇸🇬SG_1030
-      - Relay_-🇦🇺AU_1009
-      - Relay_-🇯🇵JP_1041
-      - Relay_-🇸🇬SG_1039
-      - Relay_-🇺🇸US_1003
-      - Relay_-🇯🇵JP_1033
-      - Relay_-🇸🇬SG_1084
-      - Relay_-🇯🇵JP_1089
-      - Relay_-🇸🇬SG_1090
-      - US_1823
-      - _985
-      - Relay_-🇺🇸US_1024
-      - Relay_🇺🇸US-🇩🇪DE_2055
-      - Relay_-🇦🇺AU_1067
-      - 日本v2
       - Relay_-🇦🇺AU_1008
-      - github.com/freefq - 美国CloudFlare公司CDN节点 6
-      - Relay_-🇸🇬SG_1053
-      - 美国【付费推荐：https://v1.mk/vip】7
-      - 美国【付费推荐：https://v1.mk/vip】12
-      - _[PF][家宽]CONTABO-马来西亚Maxis
-      - US_2077
-      - Relay_-🇦🇺AU_1070
-      - Relay_-🇯🇵JP_1058
-      - Netherlands(ChatGPT) 01 TG:@SSRSUB
-      - _[WireGuard][VPN]CONTABO
-      - Relay_-🇯🇵JP_1068
-      - Relay_-🇯🇵JP_1093
+      - Relay_-🇯🇵JP_1051
       - Relay_-🇯🇵JP_1094
-      - Relay_-🇸🇬SG_1036
-      - Relay_-🇸🇬SG_1063
-      - 美国【付费推荐：https://v1.mk/vip】100
+      - Relay_-🇦🇺AU_1067
+      - US_1949
+      - Relay_-🇸🇬SG_1090
+      - Relay_-🇸🇬SG_1064
+      - Relay_-🇯🇵JP_1089
       - Relay_-🇸🇬SG_1007
       - Relay_-🇦🇺AU_1011
-      - _[原生][商宽]VNPT
-      - _1059
-      - Relay_-🇸🇬SG_1064
-      - Relay_-🇭🇰HK_1020
+      - Relay_-🇯🇵JP_1077
+      - 日本v2
+      - Relay_-🇯🇵JP_1033
+      - Relay_-🇦🇺AU_1050
       - _[WARP]CONTABO
+      - Relay_-🇯🇵JP_1042
+      - Relay_-🇯🇵JP_1058
+      - Relay_-🇸🇬SG_1035
+      - Relay_-🇦🇺AU_1009
+      - Relay_-🇸🇬SG_1091
+      - Relay_-🇸🇬SG_1060
+      - US_1836
+      - US_1975
+      - _985
+      - _[原生][商宽]VNPT
+      - Relay_-🇸🇬SG_1030
+      - Relay_-🇸🇬SG_1095
+      - Relay_-🇸🇬SG_1053
+      - _[WireGuard][VPN]CONTABO
+      - US_1968
+      - Relay_-🇯🇵JP_1010
+      - _[PF][家宽]CONTABO-马来西亚Maxis
+      - Relay_-🇦🇺AU_1040
+      - Relay_-🇯🇵JP_1068
+      - Relay_-🇦🇺AU_1057
+      - US_2077
+      - Relay_-🇯🇵JP_1093
+      - Relay_-🇺🇸US_1024
+      - Relay_-🇯🇵JP_994
+      - Relay_-🇦🇺AU_1076
       - TW🇸🇬_[PF][家宽]OVH-台灣凱擘大寬頻KBRO
-      - Relay_-🇸🇬SG_1029
-      - _CN_中国 7
+      - Relay_-🇦🇺AU_1070
+      - Relay_-🇯🇵JP_1041
+      - Relay_-🇦🇺AU_1043
+      - CH_1122
+      - Relay_🇺🇸US-🇦🇺AU_2101
       - _[PF][家宽]OVH-印尼宽带FastNet
+      - Relay_-🇸🇬SG_1063
+      - 美国【付费推荐：https://v1.mk/vip】100
+      - 美国【付费推荐：https://v1.mk/vip】12
+      - Relay_-🇸🇬SG_1039
+      - Netherlands(ChatGPT) 01 TG:@SSRSUB
+      - _CN_中国 7
+      - 美国【付费推荐：https://v1.mk/vip】7
 rules:
  - DOMAIN-SUFFIX,local,🎯 全球直连
  - IP-CIDR,192.168.0.0/16,🎯 全球直连,no-resolve
