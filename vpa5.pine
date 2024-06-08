@@ -1,0 +1,735 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © karthikmarar
+//Version 5 - dated 15 Aug 2023 -  Revision Notes
+//Now the user has an option to display SOS and SOW symbols instead of text labels. The description of the SOS/SOW can be made available with the help of Tooltips displayed when the cursor is placed on the symbols
+//Bugs in the trend band for the Minor Trend has been corrected
+//Status of the "Relative Strength" (In comparision to NSE 500) , The Absolute Strength of the stock trend and the Moneyflow in to the stock are displayed in the STatus Table on the right Hand side top.
+//New signal added  - High Volume unable to move price.  Demand / Supply Area - Bullish or Bearish  Depending on the Location of the Bar
+//@version=4
+// This is a updated version of the VPA Analysis, Rechristened as VPA 5.0  to be inline with the Amibroker Version.
+// Thanks to Marge Pande for Coding assistance  - Resistance and Volume Lines  and some updates
+// Credits to Quantnomad for the new Alert log (Public Script). 
+// Revision Notes
+// Added the Bar Status and Trend Indication Table
+// Aded the Alert Indicatio and LOg
+// New signals like two bar reversal and Ease of movement added
+// Option to switch off various VSA indication added
+//Added option to plot Ressitance and Volume LInes
+//-------------------------Revision 1 ------------------------------------------
+//--------------------------Revision Notes-------------------------------------------
+//Version 5 - Revision Notes
+//Now the user has an option to display SOS and SOW symbols instead of text labels. The description of the SOS/SOW can be made available with the help of Tooltips displayed when the cursor is placed on the symbols
+//Bugs in the trend band for the Minor Trend has been corrected
+//Status of the "Relative Strength" (In comparison to NSE 500) , The Absolute Strength of the stock trend and the Money flow in to the stock are displayed in the Status Table on the right Hand side top.
+//New signal added - High Volume unable to move price.  Demand / Supply Area - Bullish or Bearish Depending on the Location of the Bar
+// The Bar colouring based on strength (3 Colours) is confusing to many users and will be removed. 
+//New bar colouring has been introduced. If the close is higher than yesterday’s close then it will be coloured in green shade. If the volume is below average then the colour will be in lighter green and if the volume is higher than average colour will be darker shade of green.in the similar manner if the close is lower than yesterdays’ close then the bar will be coloured in shades of Red depending on Volume. The average volume will be 60 days volume.
+//------------------------------------------------------------------------------------------------------------------------
+study("VPA - 5.0 ", overlay=true, max_labels_count=500)
+crt = input(true, "New Chart format with symbols and POP up descriptions")
+bkbg  = input(title="Black Background", type=input.bool, defval=false)
+showtrend = input(false, title="Show Trend Bands", type=input.bool, group="Bands")
+strband = input(false, title="Show Strength Bands", type=input.bool, group="Bands")
+plot50 = input(title="Plot 50 EMA", type=input.bool, defval=false, group="Mov.Avg")
+plot200 = input(title="Plot 200 EMA", type=input.bool, defval=false, group="Mov.Avg")
+plot(plot50? ema(close,50): na, "EMA50", color= color.blue, style = plot.style_line )
+plot(plot200? ema(close,200): na,"EMA200", color=color.fuchsia, style = plot.style_line )
+
+//---------------------Plot EMA's and VWAP------------------------------------
+showvwap = input(false, "Show VWAP", group="VWAP & EMA")
+plot(showvwap ? vwap : na, "VWAP", color=color.new(color.yellow,10), style=plot.style_stepline, linewidth=2)
+showpma  = input(false, "Show EMA", group="VWAP & EMA")
+emasrc  = input("CLOSE", "EMA Source", options=["CLOSE","PIVOT"], group="VWAP & EMA")
+shp  = input(13,"Short EMA period", group="VWAP & EMA")
+mip  = input(34, "Mid EMA period", group="VWAP & EMA")
+lop  = input(55, "Long EMA period", group="VWAP & EMA")
+pe = emasrc == "CLOSE" ? close : hlc3
+ped = ema(pe,shp)
+pew = ema(pe,mip)
+pem = ema(pe,lop)
+plot1 = plot(showpma ? ped : na, "PEMA-Short", color=color.lime)
+plot2 = plot(showpma ? pew : na, "PEMA-Medium", color=color.yellow)
+plot3 = plot(showpma ? pem : na, "PEMA-Long", color=color.red)
+fill(plot1, plot2,  color.new(color.green, transp =90) )
+fill(plot2, plot3,  color.new(color.yellow, transp =90) )
+
+//-------------------End of EMA and VWAP section --------------
+//===================== Basic VSA Definitions =======================================
+
+volAvg = sma(volume,60)
+volMean = stdev(volAvg,30)
+volUpBand3 = volAvg + (3*volMean)
+volUpBand2 = volAvg + (2*volMean)
+volUpBand1 = volAvg + (1*volMean)
+volDnBand1 = volAvg -(1*volMean)
+volDnBand2 = volAvg - (2*volMean)
+H = high
+L = low
+V = volume
+C = close
+O = open
+midprice = (H+L)/2
+spread = (H-L)
+avgSpread = sma(spread,40)
+AvgSpreadBar        =   spread > avgSpread// to be checked
+wideRangeBar = spread>(1.5*avgSpread)
+narrowRangeBar   = spread<(0.7*avgSpread)
+lowVolume = V<volume[1] and V<volume[2] and V <volAvg // mods
+upBar       = C>close[1]//C>Ref(C,-1)
+downBar     = C<close[1]//C<Ref(C,-1)
+highVolume  = V>volume[1] and volume[1]>volume[2]// Review
+closeFactor = C-L
+clsPosition = spread/closeFactor
+closePosition       = ((closeFactor == 0) ? (avgSpread) : (clsPosition))
+vb          = V > volAvg or V> volume[1]          
+upClose     = C>=((spread*0.7)+L)// close is above 70% of the Bar
+downClose   = C<=((spread*0.3)+L)// close is below the 30% of the bar
+aboveClose  = C>((spread*0.5)+L)// close is between 50% and 70% of the bar
+belowClose  = C<((spread*0.5)+L)// close is between 50% and 30% of the bar
+midClose    = C>((spread*0.3)+L) and C<((spread*0.7)+L)// close is between 30% and 70% of the bar
+veryLowClose  = closePosition>4//close is below 25% of the bar
+veryHighClose = closePosition<1.35// Close is above 80% of the bar
+
+
+ClosePos = iff(C<=((spread*0.2)+L),1,iff(C<=((spread*0.4)+L),2,iff(C<=((spread*0.6)+L),3,iff(C<=((spread*0.8)+L),4,5))))
+//1 = downClose, 2 = belowClose, 3 = midClose, 4 = aboveClose, 6 = upClose
+volpos =   iff(V>(volAvg*2),1,iff(V>(volAvg*1.3),2,iff(V>volAvg,3,iff(V<volAvg and (V<volAvg*0.7) ,4,5))))
+//1 = veryhigh, 2 = High , 3 = AboveAverage, 4  = volAvg //LessthanAverage, 5 = lowVolume
+
+freshGndHi   = high == highest(high,5)?1:0
+freshGndLo   = low  == lowest(low,5)?1:0
+
+//---------------No Movement Bar--------------------
+pm       = abs(C - O) // price move
+pma      = ema(pm, 40) // avg price move
+Lpm	     = pm < (0.5 * pma) // small price move
+bw       = C > O ? H-C : H-O // wick
+bwh      = bw >= 2 * pm // big wick
+fom1     = V > 1.5 * volAvg and Lpm // high volume not able to move the price
+
+//---------------Two Bar Revrsal  Dowm side--------------------
+tbcd    = C[1] < C[5] and C[1] < C[4] and C[1] < C[3] and C[1] < C[2] //yesterday bar lower than last 4 bars
+tbc1    = L < L[1] and H > H[1] // today bar shadoes yesterday bar
+tbc1a   = L < L[1] and C > C[1]
+tbc2    = tbcd == 1 and tbc1 == 1 and V > 1.2 * volAvg and upClose
+tbc2a   = tbcd == 1 and tbc1a == 1  and V > 1.2 * volAvg and upClose and not tbc1
+tbc3    = tbcd == 1 and tbc1 == 1 and upClose and V <= 1.2 * volAvg
+//---------------- Two bar reversal Up sie --------------------
+tbcu   =  C[1] >  C[5] and C[1] > C[4] and C[1] > C[3] and C[1] > C[2]
+tbc4   =  tbcu == 1 and tbc1 == 1  and V >  1.2 * volAvg and downClose
+tbc5   =  tbcu == 1 and tbc1 == 1  and downClose and V <= 1.2 * volAvg
+//=========================================================================|
+//                    Trend Analysis Module                                | 
+//=========================================================================|
+
+
+rwhmins = (high - nz(low[2])) / (atr(2) * sqrt(2))
+rwhmaxs = (high - nz(low[10])) / (atr(10) * sqrt(10))
+rwhs = max( rwhmins, rwhmaxs )
+
+rwlmins = (nz(high[2]) - low) / (atr(2) * sqrt(2))
+rwlmaxs = (nz(high[10]) - low) / (atr(10) * sqrt(10))
+rwls = max( rwlmins, rwlmaxs )
+
+
+rwhminl = (high - nz(low[8])) / (atr(8) * sqrt(8))
+rwhmaxl = (high - nz(low[40])) / (atr(40) * sqrt(40))
+rwhl = max( rwhminl, rwhmaxl )
+
+rwlminl = (nz(high[8]) - low) / (atr(8) * sqrt(8))
+rwlmaxl = (nz(high[40]) - low) / (atr(40) * sqrt(40))
+rwll = max( rwlminl, rwlmaxl )
+
+//RWILLo  = max(rllmin,rllmax)
+
+
+ground = rwhs
+sky    = rwls  
+
+j      = rwhl-rwll
+k      = rwhs-rwls
+j2     = rwhl 
+k2     = rwll  
+
+
+
+
+ja     = crossover(j,1) // The following section check the diffeent condition of the RWi above and below zero
+jb     = crossunder(j,1) // In oder to check which trend is doing what
+jc     = crossover(-1,j)
+jd     = crossover(j,-1)
+j2a    = crossover(j2,1)
+j2b    = crossunder(j2,1)
+k2a    = crossover(k2,1)
+k2b    = crossunder(k2,1)
+//Define the Major, Minor and Immediate trend Status
+upmajoron   = j > 1 and ja[1]
+upmajoroff  = j < 1 and jb[1]
+
+upminoron   = j2 > 1 and j2a[1]
+upminoroff  = j2 < 1 and j2b[1]
+dnmajoron   = j < -1 and jc[1]
+dnmajoroff  = j > -1 and jd[1]
+dnminoron   = k2 > 1 and k2a[1]
+dnminoroff  = k2 < 1 and k2b[1]
+upmid       = iff(ground > 1, 1,0)
+dnimd       = iff(sky > 1, 1, 0)
+upmajor     = iff(j>1,1,iff(j<(-1),-1,0))
+upminor     = iff(j2>1,1,-1)
+dnminor     = iff(k2>1,1,-1)
+
+upmajclr = upmajor ==1 ? color.rgb(3, 252, 36) : upmajor == -1 ?  #fa5050 : #f4fc79 
+//upmajclr = upmajor == 1 ? color.lime : upmajor == -1? color.red : color.yellow
+upmidclr = upmid == 1 ? color.lime : upmid == 0 and dnimd == 1? color.red : color.yellow
+upminclr = upminor == 1 ? color.lime : upminor == -1 ? color.red : color.yellow
+
+plotshape(showtrend, title="Major Trend", style=shape.square, color=upmajclr, location=location.top, size= size.normal, text="")
+plotshape(showtrend, title="Mid Trend", style=shape.square, color=upmidclr, location=location.top, size = size.small, text="")
+plotshape(showtrend, title="Minor Trend", style=shape.square, color=upminclr,  location=location.top, size = size.tiny, text="")
+
+//=========================================================================|
+//                    Slope Calculation                                    |
+//=========================================================================|
+src = sma(close,5)
+//--------------longterm trend---------------
+lts      = linreg(src, 40, 0)
+ltsprev  = linreg(close[3], 40, 0)
+ltsslope = ((lts - ltsprev) / 3 )
+//-------------Medium Term Trend-------------
+mts      = linreg(src, 20, 0)
+mtsprev  = linreg(close[3], 20, 0)
+mtsslope = ((mts - mtsprev) / 3 )
+//-------------short Term Trend-------------
+sts      = linreg(src, 3, 0)
+stsprev  = linreg(close[1], 3, 0)
+stsslope = ((sts - stsprev) / 2 )
+tls      = stsslope
+//=========================================================================|
+//                    VSA SIGNAL GENERATION                                |
+//=========================================================================|
+upThrustBar  = wideRangeBar and downClose  and high > high[1] and upmid==1 //WRB and UHS in midterm trend
+nut          = wideRangeBar and downClose  and freshGndHi and highVolume   // NEW SIGNAL - Upthrust after new short up move. Review and delete
+bc           = wideRangeBar and aboveClose and volume == highest(volume,60) and upmajor==1 // Buying Climax
+upThrustBar1 = wideRangeBar and (ClosePos==1 or ClosePos==2) and upminor>0 and H>H[1]and (upmid>0 or upmajor>0) and volpos < 4 // after minor up trend
+
+upThrustBartrue = wideRangeBar and ClosePos==1 and upmajor>0 and H>H[1] and volpos < 4//occurs after a major uptrend
+upThrustCond1   = upThrustBar[1] and downBar and not narrowRangeBar // The Bar after Upthrust Bar- Confirms weakness
+upThrustCond2   = upThrustBar[1] and downBar and V>(volAvg*1.3) // The Bar after Upthrust Bar- Confirms weakness
+upThrustCond3   = upThrustBar and V>(volAvg*2) // Review
+topRevBar       = V[1]>volAvg  and upBar[1] and wideRangeBar[1] and downBar and downClose and wideRangeBar and upmajor>0 and H==highest(H,10)// Top Reversal bar
+PseudoUpThrust  = (upBar[1])and H>H[1] and V[1]>1.5*volAvg and downBar and downClose and not upThrustBar
+pseudoUtCond    = PseudoUpThrust[1] and downBar and downClose and not upThrustBar
+trendChange     = upBar[1] and H==highest(H,5) and downBar and (downClose or midClose) and V>volAvg and upmajor>0 and upmid>0 and not wideRangeBar and not PseudoUpThrust
+noDemandBarUt   = upBar and narrowRangeBar and lowVolume and (aboveClose or upClose) and ((upminor>=0 and upmid>=0) or (upminor<=0 and upminor>=0))//in a up market
+noDemandBarDt   = upBar and narrowRangeBar and lowVolume and (aboveClose or upClose) and (upminor<=0 or upmid<=0)// in a down or sidewayss market
+noSupplyBar     = downBar and narrowRangeBar and lowVolume  and midClose
+             
+lowVolTest      = low == lowest(low,5) and upClose and lowVolume
+lowVolTest1     = low == lowest(low,5) and V<volAvg and L<L[1] and upClose and upminor>0 and upmajor>0
+lowVolTest2     = lowVolTest[1]  and upBar and upClose
+
+sellCond1       = (upThrustCond1 or upThrustCond2 or upThrustCond3)
+sellCond2       = sellCond1[1]==0
+sellCond        = sellCond1 and sellCond2
+strengthDown0   = upmajor < 0 and volpos < 4 and downBar[1] and upBar and ClosePos>3 and dnminor ==1 and dnimd == 1
+strengthDown    = volpos<4 and downBar[1] and upBar and ClosePos>3 and dnimd == 1 and dnminor ==1 //upmid < 0 and upminor<0                       // Strength after a down trend
+strengthDown1   = upmajor== -1 and V>(volAvg*1.5) and downBar[1] and upBar and  ClosePos>3 and upmid<=00 and upminor<0
+strengthDown2   = upmid<=0 and V[1]<volAvg  and upBar and veryHighClose and volpos<4
+buyCond1        = strengthDown or strengthDown1
+buyCond         = upBar  and buyCond1[1]
+stopVolume      = L==lowest(L,5)  and (upClose or midClose) and V>1.5*volAvg and upmajor<0
+revUpThrust     = upBar and upClose and V>V[1] and V>volAvg and  wideRangeBar and downBar[1] and downClose[1] and upminor<0 and close<close[1]
+effortUp        = H>H[1] and L>L[1] and C>C[1] and C>=((H-L)*0.7+L) and spread>avgSpread and volpos < 4 
+effortUpfail    = effortUp[1] and (upThrustBar or upThrustCond1 or upThrustCond2 or upThrustCond3 or (downBar and AvgSpreadBar))
+effortDown      = H<H[1] and L<L[1] and C<C[1] and C<=((H-L)*0.25+L) and wideRangeBar and V>V[1] 
+effortDownFail  = effortDown[1] and ((upBar and AvgSpreadBar) or revUpThrust or buyCond1)
+upflag          = (sellCond or buyCond or effortUp or effortUpfail or stopVolume or effortDown or effortDownFail or revUpThrust or noDemandBarDt or noDemandBarUt or noSupplyBar or lowVolTest or lowVolTest1 or lowVolTest2 or bc)
+bullBar         = (V>volAvg or V>V[1]) and C<=((spread*0.2)+L) and upBar and not upflag
+bearBar         = vb  and downClose and downBar and spread>avgSpread and not upflag
+sc              = wideRangeBar and belowClose and V == highest(V,60) and upmajor== -1 // NEW SIGNAL Selling Climax
+
+
+//=============================== PLOT SHAPES SECTION===================
+
+ofs = close * 0.02
+showut = input(true, "Show Up Thrusts (UT)", tooltip="An Upthrust Bar. A sign of weakness. High Volume adds weakness.  A down bar after Upthrust adds weakness", group="VSA Signals") 
+plotshape(showut and not crt? (upThrustBar or upThrustBartrue) and not effortUpfail and not sellCond and not bc : na, "", style=shape.triangledown, location=location.abovebar, color=color.new(#990000,0), text="UT1", textcolor=#990000, editable=false, size=size.tiny)
+UT1 = upThrustBar or upThrustBartrue
+plotshape(showut and not crt ? (upThrustCond1 or upThrustCond2 ) and not effortUpfail and not sellCond and not bc : na, "UT2", style=shape.triangledown, location=location.abovebar, color=color.new(#ff0000, 0), text="UT2", textcolor=#ff0000, editable=false, size=size.tiny) 
+UT2 = upThrustCond1 or upThrustCond2
+UT = UT1 or UT2
+//----------------------
+// Draw a new label above the current bar's high
+if UT and crt
+    UTLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.red,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(UTLabel, "--------------- \n      SOW        \n--------------\n UPTHRUST BAR \n----------------\n A Sign of Weakness. The prices were marked up first, attracting the retail buyer. Then prices are rapidly marked down trapping the weak hands ")
+
+//-------------------------------
+//alertcondition(upThrustBar, title='Alert on UT1 an UT2 and UT', message='An Upthrust Bar. A sign of weakness. High Volume adds weakness.  A down bar after Upthrust adds weakness')
+
+showtrb = input(true, "Show Top Reversal Bar (TRB)", tooltip="Top Reversal. Sign of Weakness.  ",  group="VSA Signals")
+plotshape(showtrb and not crt ? topRevBar and not sellCond and not UT and not effortUpfail : na, "TRB", style=shape.triangledown, location=location.abovebar, color=color.new(#ff9900, 0), text="TRB", textcolor=#ff9900, editable=false, size=size.tiny) 
+//alertcondition(topRevBar   , title='Alert on TRB', message='Top Reversal. Sign of Weakness.  ')
+if (topRevBar and not sellCond and not UT and not effortUpfail) and crt
+    TRBLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.red,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(TRBLabel, "--------------- \n      SOW        \n--------------\n TOP REVERSAL BAR \n----------------\n A Sign of Weakness. Probable top is being formed and probability of reversal looks eminent ")
+//--------------------------------------------------------------------
+showtch = input(true, "Show Trend Change (TC)", tooltip="High volume Downbar after an upmove on high volume indicates weakness.", group="VSA Signal")
+plotshape(showtch and not crt? trendChange and not effortUpfail : na, "TC", style=shape.triangledown, location=location.abovebar, color=color.new(#ff471a, 0), text="TC", textcolor=#ff471a, editable=false, size=size.tiny) 
+//alertcondition(trendChange  , title='Alert on TCH', message='High volume Downbar after an upmove on high volume indicates weakness.  ')
+if (trendChange and not effortUpfail) and crt
+    TCLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.red,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(TCLabel, "--------------- \n      SOW        \n--------------\n TREND CHANGE BAR \n----------------\n A Sign of Weakness. Indicates high probability of a Trend Change from Up Trend  ")
+//---------------------------------------------------------------------
+showput = input(true, "Show Pseudo Up Thrust (PST/PUC)", tooltip="Psuedo UpThrust.   A Sign of Weakness.A Down Bar closing down after a Pseudo Upthrust confirms weakness. ", group="VSA Signals")
+plotshape(showput and not crt ? PseudoUpThrust and not effortUpfail : na , "PUT", style=shape.triangledown, location=location.abovebar, color=color.new(#ff471a, 0), text="PUT", textcolor=#ff471a, editable=false, size=size.tiny) 
+plotshape(showput and not crt? pseudoUtCond and not effortUpfail : na, "PUC", style=shape.triangledown, location=location.abovebar, color=color.new(#ff471a, 0), text="PUC", textcolor=#ff471a, editable=false, size=size.tiny) 
+if (PseudoUpThrust and not effortUpfail) and crt
+    PTLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.orange,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(PTLabel, "--------------- \n      SOW        \n--------------\n PSEUDO UPTHRUST BAR \n----------------\n A Sign of Weakness. Psuedo UpThrust Bar. An UpThrust Bar on lower volume. Indicates weakness, though reduced. ")
+//-----------------------------
+shownd = input(true, "Show No Demand (ND)", tooltip="No Demand in a Uptrend. A sign of Weakness. Otherwise upside unlikely soon ", group="VSA Signals")
+plotshape(shownd  and not crt? noDemandBarUt : na, "ND", style=shape.circle, location=location.abovebar, color=#f7e30c, text="ND", textcolor=#ff471a, editable=false, size=size.tiny) 
+plotshape(shownd and not crt? noDemandBarDt : na, "ND", style=shape.circle, location=location.abovebar, color=#f7e30c, text="ND", textcolor=#ff471a, editable=false, size=size.tiny) 
+//alertcondition(noDemandBarUt or noDemandBarDt  , title='Alert on ND', message='No Demand in a Uptrend. A sign of Weakness. Otherwise upside unlikely soon ') 
+if noDemandBarUt and crt
+    NDLabel1 = label.new(x=bar_index, y=high+ofs, color=color.new (color.yellow,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(NDLabel1, "--------------- \n      SOW        \n--------------\n NO DEMAND BAR \n----------------\n A Sign of Weakness. Indicates lack of Demand. Without Demand price cannot move up. No Demand in a Up trend indicates more weakness ")
+if noDemandBarDt and crt
+    NDLabel2 = label.new(x=bar_index, y=high+ofs, color=color.new(color.yellow,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(NDLabel2, "--------------- \n      SOW        \n--------------\n NO DEMAND BAR \n----------------\n A Sign of Weakness. Indicates lack of Demand in a down Trend.Does not have much impact ")
+//------------------------------------------------------
+showns = input(true, "Show No Supply (NS)", tooltip="No Supply. A sign of Strength.", group="VSA Signals")
+plotshape(showns and not crt? noSupplyBar : na, "NS", style=shape.circle, location=location.belowbar, color=color.new(color.lime, 0), text="NS", textcolor=color.green, editable=false) 
+// alertcondition(noSupplyBar , title='Alert on NS', message='No Supply. A sign of Strength.  ') 
+if noSupplyBar and crt
+    NSLabel = label.new(x=bar_index, y=low-ofs, color=color.new(color.yellow,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(NSLabel, "--------------- \n      SOS        \n--------------\n NO SUPPLY BAR \n----------------\n A Sign of Strength. Indicates lack of Supply. Without Supply price cannot move down ")
+//---------------------------------------------------------------------------------------------
+showlvtst = input(true, "Show Low Volume Supply Test (LVT/ST)", tooltip="Test of Supply. A high volume Bar closing on High after the Test will confirm the Strength", group="VSA Signals")
+plotshape(showlvtst and not crt ? lowVolTest and not effortDownFail : na, "LVT", style=shape.circle, location=location.belowbar, color=color.new(color.lime, 0), text="LVT", textcolor=color.green, editable=false, size=size.tiny) 
+plotshape(showlvtst and not crt? lowVolTest2 and not effortUp : na, "ST", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST", textcolor=color.green, editable=false, size=size.tiny) 
+lvt = lowVolTest or lowVolTest2
+//alertcondition(lvt , title='Alert on LVT', message='Test for supply. An upBar closing near High after a Test confirms strength.  ') 
+if (lowVolTest and not effortDownFail) and crt
+    LV1Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0) ,style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(LV1Label, "--------------- \n      SOS        \n--------------\n LOW VOLUME TEST \n----------------\n  Sign of Strength. \n Test of Supply. A high volume Bar closing on High after the Test will confirm the Strength")
+if (lowVolTest2 and not effortUp ) and crt
+    LV2Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(LV2Label, "--------------- \n      SOS        \n--------------\n LOW VOLUME TEST \n----------------\n  Sign of Strength. \n Test of Supply. A high volume Bar closing on High after the Test will confirm the Strength")
+//----------------------------------------------------------------------------------------
+EFD = effortDownFail
+ST1 = strengthDown0
+ST2 = strengthDown and not strengthDown2
+strcond = (strengthDown2 and not strengthDown0 and not strengthDown and not strengthDown1)? 1:0
+ST3 = strengthDown1
+ST4 = strengthDown2 and strcond
+ST5 = strengthDown2 and not strcond
+ST  = ST1 or ST2 or ST3 or ST4 or ST5
+showstsig = input(true, "Show Strength Signals (ST)", tooltip="Strength seen returning after a down trend.", group="VSA Signals")
+plotshape(showstsig and not crt? strengthDown0  : na, "ST1", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST1", textcolor=color.green, editable=false, size=size.tiny) 
+//plotshape(showstsig ? strengthDown0 and not EFD and not effortUp and not stopVolume and not revUpThrust : na, "ST1", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST1", textcolor=color.green, editable=false, size=size.tiny) 
+plotshape(showstsig and not crt ? strengthDown and not strengthDown2 and not EFD and not effortUp and not stopVolume and not revUpThrust: na, "ST2", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST1", textcolor=color.green, editable=false, size=size.tiny) 
+plotshape(showstsig and not crt ? strengthDown1 and not EFD and not effortUp and not stopVolume and not revUpThrust : na, "ST3", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST1", textcolor=color.green, editable=false, size=size.auto)
+plotshape(showstsig and not crt ? strengthDown2 and strcond and not EFD and not effortUp and not stopVolume and not revUpThrust: na, "ST4", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST2", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(ST , title='Alert on ST1, ST2, ST3, ST4 and ST', message='Strength seen returning after a down trend.  ') 
+if strengthDown0 and crt
+    ST1Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(ST1Label, "--------------- \n      SOS        \n--------------\n STRENGTH COMING IN \n----------------\n  sign of Strength. \n Strength coming in after a Down Trend")
+if strengthDown and crt
+    ST2Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(ST2Label, "--------------- \n      SOS        \n--------------\n STRENGTH COMING IN \n----------------\n  sign of Strength. \n Strength coming in after a Down Trend")
+if strengthDown1 and crt
+    ST3Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(ST3Label, "--------------- \n      SOS        \n--------------\n STRENGTH COMING IN \n----------------\n  sign of Strength. \n Strength coming in after a Down Trend. High VOlume adds to the strength")
+if strengthDown2 and crt
+    ST4Label = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(ST4Label, "--------------- \n      SOS        \n--------------\n STRENGTH COMING IN \n----------------\n  sign of Strength. \n High volume upBar closing on the high indicates strength.")
+//--------------------------------------------------------------------------------------------------------------------------------------
+showsv = input(true, "Show Stop Volume (SV)", tooltip="Stopping volume. Normally indicates end of bearishness is nearing.", group="VSA Signals")
+plotshape(showsv and not crt ? stopVolume and not ST : na, "SV", style=shape.circle, location=location.belowbar, color=color.new(color.lime, 0), text="SV", textcolor=color.green, editable=false, size=size.auto) 
+//plotshape(showsv ? stopVolume and ST : na, "SV" , style=shape.circle, location=location.belowbar, color=color.new(color.lime, 0), text="ST\nSV", textcolor=color.green, editable=false, size=size.auto) 
+//alertcondition(stopVolume , title='Alert on SV', message='Stopping volume. Normally indicates end of bearishness is nearing.  ') 
+if stopVolume and not ST and crt
+    SVLabel = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(SVLabel, "--------------- \n      SOS        \n--------------\n STOPPING VOLUME \n----------------\n 1. Stopping volume is also called as absorption volume. \n 2. This indicates that the weak hands are panic selling and the strong hands are stepping in to absorb the selling. As a result the stock will soon see side ways movement or go into a long accumulation phase." + 
+                       " \n 3. In effect the stopping volume or absorption volume indicates that the long bearish move is likely to end soon. \n 4. Stopping volumes are basically alert to the impending reversal. ")
+//---------------------------------------------------------------------------
+showeu = input(true, "Show Effort Up (EU)", tooltip="Effort to Move up. Bullish Sign.", group="VSA Signals")
+plotshape(showeu and not crt?  effortUp and not ST and not buyCond and not effortDownFail and not bc: na, "EU", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="EU", textcolor=color.green, editable=false, size=size.tiny) 
+//REV 1 /plotshape(showeu ?  effortUp and ST and not buyCond : na, "EU", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST\nEU", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(effortUp , title='Alert on EU', message='Effort to Move up. Bullish Sign.  ') 
+if (effortUp and not ST and not buyCond and not effortDownFail and not bc ) and crt
+    EULabel = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(EULabel, "--------------- \n      SOS        \n--------------\n EFFORT MOVE UP BAR \n----------------\n  1. Also called “Effort to Rise” Bar \n 2. Indicates that Smart money is pushing up the Price \n 3. Indicates that interest is coming in the stock \n 4. Most common signal seen")
+//-------------------------------------------------------------------------------------------
+showeuf = input(true, "Show Effort Up Fail (EUF)", tooltip="Effort to Move up Failed. Bearish sign.", group="VSA Signals")
+plotshape(showeuf and not crt ? effortUpfail and not UT : na, "EUF", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="EUF", textcolor=color.red, editable=false, size=size.tiny) 
+//alertcondition(effortUpfail , title='Alert on EUF', message='Effort to Move up Failed. Bearish sign  ') 
+if (effortUpfail and not UT) and crt
+    EUFLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.orange,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(EUFLabel, "--------------- \n      SOW        \n--------------\n EFFORT TO MOVE UP FAILED \n----------------\n  sign of Weakness. \n Effort to Move Up Failed. Supply is still present and overcame effort to move up stock")
+//------------------------------------------------------------------------------------------------------------------------------------
+showed = input(true, "Show Effort Down (ED)", tooltip="Effort to Move Down. Bearish Sign.", group="VSA Signals")
+plotshape(showed and not crt? effortDown and not effortUpfail and not sc : na, "ED", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="ED", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(effortDown , title='Alert on ED', message='Effort to Move Down. Bearish Sign  ') 
+if (effortDown and not effortUpfail and not sc) and crt
+    EUFLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.orange,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(EUFLabel, "--------------- \n      SOW        \n--------------\n EFFORT TO MOVE DOWN \n----------------\n  sign of Weakness. \n Overwhelming supply psuhing down the Price")
+//------------------------------------------------------------------------------------------------------------------------------
+showedf = input(true, "Show Effort Down Fail (EDF)", tooltip="Effort to Move Down Failed. Bullish sign.", group="VSA Signals")
+plotshape(showedf and not crt? effortDownFail and not ST : na, "EDF", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="EDF", textcolor=color.green, editable=false, size=size.tiny) 
+//plotshape(showedf and not crt? effortDownFail and ST : na, "EDF", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="ST\nEDF", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(effortDownFail , title='Alert on EDF', message='Effort to Down Failed. Bullish sign  ') 
+if (effortDownFail and not ST) and crt
+    EDFLabel = label.new(x=bar_index, y=low-ofs, color=color.rgb(81, 238, 152, 13),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(EDFLabel, "--------------- \n      SOS        \n--------------\n EFFORT TO MOVE DOWN FAIL\n----------------\n  sign of Strength. \n Effort to push the prices down has been overcome by demand. Shows Demand has the upper hand.")
+//-----------------------------------------------------------------------------------------------------
+showrut = input(true, "Show Reverse Up Thrust (RUT)", tooltip="Reverse Up Thrust - Bullish sign.", group="VSA Signals")
+plotshape(showrut and not crt ? revUpThrust and not ST : na, "RUT", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="RUT", textcolor=color.green, editable=false, size=size.auto) 
+//alertcondition(revUpThrust , title='Alert on RUT', message='Reverse Up Thrust - Bullish.') 
+if (revUpThrust and not ST) and crt 
+    RUTLabel = label.new(x=bar_index, y=low-ofs, color=color.rgb(57, 193, 91, 13),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(RUTLabel, "--------------- \n      SOS        \n--------------\n REVERSE UPTHRUST\n----------------\n  sign of WeaknessStrength. \n First the Prices are drivedriven down attracting short. Then the prices are quickly marked up Trapping the shorts. Normally happens at reversla points")
+//------------------------------------------------------------------------
+showbyc = input(true, "Show Buy Condition Exist (BCE)", tooltip="Strength Returns - Buy Condition exist.", group="VSA Signals")
+plotshape(showbyc and not crt ? buyCond and not ST and not effortUp and not lvt : na, "BCE1", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="BCE", textcolor=color.green, editable=false, size=size.tiny) 
+//plotshape(showbyc ? buyCond and not ST and effortUp : na, "BCE2", style=shape.triangleup, location=location.belowbar, color=color.new(color.lime, 0), text="EU\nBCE", textcolor=color.green, editable=false, size=size.tiny, display = display.all - display.status_line)
+//alertcondition(buyCond , title='Alert on BYC', message='Strength Returns - Buy Condition exist.') 
+if (buyCond and not ST and not effortUp and not lvt ) and crt 
+    BYLabel = label.new(x=bar_index, y=low-ofs, color=color.rgb(57, 193, 91, 13),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(BYLabel, "--------------- \n      SOS        \n--------------\n BUY CONDITION EXISTS\n----------------\n  sign of Strength. \n Strength has returned. Buy Conditions exits. Probability of bullish moves is high")
+//----------------------------------------------------------------------
+showsce = input(true, "Show Sell Condition Exist (SCE)", tooltip="Weakness Returns - Sell Condition exist.", group="VSA Signals")
+plotshape(showsce and not crt? sellCond and not UT : na, "SCE", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="SCE", textcolor=color.red, editable=false, size=size.tiny) 
+plotshape(showsce and not crt ? sellCond and UT1 : na, "SCE", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="UT\nSCE", textcolor=color.red, editable=false, size=size.tiny) 
+//alertcondition(sellCond  , title='Alert on SEC', message='Weakness Returns - Sell Condition exist.') 
+if ( sellCond and not UT ) and crt 
+    SYLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.orange,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(SYLabel, "--------------- \n      SOW        \n--------------\n SELL CONDITION EXISTS\n----------------\n  sign of Weakness. \n Weakness has returned. Sell Conditions exits. Probability of Bearish moves is high")
+//--------------------------------------------------------------------------------------------
+showbc = input(true, "Show Buying Climax (BC)", tooltip="Buying Climax - End of Current Up Trend.", group="VSA Signals")
+plotshape(showbc and not crt? bc and not UT : na, "BC", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="BC", textcolor=color.red, editable=false, size=size.tiny) 
+plotshape(showbc and not crt? bc and UT1 : na, "BC", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="UT\nBC", textcolor=color.red, editable=false, size=size.tiny) 
+//alertcondition(bc  , title='Alert on BC', message='Buying Climax - End of Current Up Trend.') 
+if ((bc and not UT) and crt ) or ((bc and UT1) and crt )
+    BCLabel = label.new(x=bar_index, y=high+ofs, color=color.new(color.orange,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(BCLabel, "--------------- \n      SOW        \n--------------\n BUYING CLIMAX\n----------------\n  sign of Weakness. \n Buying Climax. \n  1.  Strong Hand passing of huge quantity of their stock to weak Hands. \n 2. Generally Indicates end of an up move \n 3. The move up need not necessarily reverse immediately ") 
+//--------------------------------------------------------------------------------
+showsc = input(true, "Show Selling Climax (SC)", tooltip="Selling Climax - End of Current Down Trend.", group="VSA Signals")
+plotshape(showsc and not crt? sc and not ST : na, "SC", style=shape.triangleup, location=location.belowbar, color=color.new(color.green, 0), text="SC", textcolor=color.green, editable=false, size=size.tiny) 
+plotshape(showsc and not crt? sc and ST : na, "SC", style=shape.triangleup, location=location.belowbar, color=color.new(color.green, 0), text="ST\nSC", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(sc  , title='Alert on SC', message='Selling Climax - End of Current Down Trend.') 
+if ((sc and not ST) and crt ) or ((sc and ST) and crt )
+    SCLabel = label.new(x=bar_index, y=low-ofs, color=color.new(color.lime,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(SCLabel, "--------------- \n      SOS        \n--------------\n SELLING CLIMAX\n----------------\n  Sign of Strength. \n Selling Climax. Smart money accumulating the stock in huge quantity. Possible end of the current Down move")
+//--------------------------------------------------------------------------------
+
+showtb = input(true, "Show Two bar Reversal  (TB)", tooltip="Two bar revesal - Indicated possibility of reversal of current move. High volume adds strength", group="VSA Signals")
+plotshape(showtb and not crt? tbc2 : na, "TB", style=shape.triangleup, location=location.belowbar, color=color.new(color.green, 0), text="TB", textcolor=color.red, editable=false, size=size.tiny) 
+plotshape(showtb and not crt ? tbc3 : na, "TB", style=shape.triangleup, location=location.belowbar, color=#f7e30c, text="TB", textcolor=color.red, editable=false, size=size.tiny) 
+plotshape(showtb and not crt? tbc4 and not UT: na, "TB", style=shape.triangledown, location=location.abovebar, color=color.new(color.red, 0), text="TB", textcolor=color.green, editable=false, size=size.tiny) 
+plotshape(showtb and not crt ? tbc5 and not UT : na, "TB", style=shape.triangledown, location=location.abovebar, color=#f7e30c, text="TB", textcolor=color.green, editable=false, size=size.tiny) 
+//alertcondition(tbc2 or tbc3 , title='Alert on TBR', message='Two Bar Reversal to the Upside') 
+//alertcondition(tbc4 or tbc5  , title='Alert on TBR', message='Two Bar Reversal to the Downside') 
+if tbc2 and crt
+    TBLabel1 = label.new(x=bar_index, y=high+ofs, color=color.new(color.lime,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(TBLabel1, "--------------- \n      SOS        \n--------------\n TWO BAR REVERSAL\n----------------\n  Sign of Strength. \n Two Bar Reversal on High Volume during a up move. \n Temporary Reversal in the current move. \n High Prabability signal")
+if tbc3 and crt
+    TBLabel2 = label.new(x=bar_index, y=high+ofs, color=color.new(color.yellow,0),style=label.style_triangledown, size=size.tiny)
+    label.set_tooltip(TBLabel2, "--------------- \n      SOS        \n--------------\n TWO BAR REVERSAL\n----------------\n  Sign of Strength. \n Two Bar Reversal on Low Volume during a up move.\n Temporary Reversal in the current move. \n Low Prabability signal")
+if tbc4 and not UT and crt
+    TBLabel3 = label.new(x=bar_index, y=low-ofs, color=color.new(color.orange,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(TBLabel3, "--------------- \n      SOW        \n--------------\n TWO BAR REVERSAL\n----------------\n  Sign of Weakness. \n Two Bar Reversal on High Volume during a down move.\n Temporary Reversal in the current move. \n High Prabability signal")
+if tbc5 and not UT and crt
+    TBLabel4 = label.new(x=bar_index, y=low-ofs, color=color.new(color.yellow,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(TBLabel4, "--------------- \n      SOW        \n--------------\n TWO BAR REVERSAL\n----------------\n  Sign of Weakness. \n Two Bar Reversal on Low Volume during a down move. \n Temporary Reversal in the current move. \n Low Prabability signal")
+//-------------------------------------------------------------------
+showfom = input(true, "Show Ease of Movement  (FOM)", tooltip="High Supply Volume unable to Move the Price. Could be Demand/Supply area ", group="VSA Signals")
+plotshape(showtb and not UT and not crt? fom1 : na, "", style=shape.square, location=location.belowbar, color=color.new(color.yellow,0), text="DS", textcolor=color.new(color.red,0), editable=false, size=size.tiny) 
+if fom1 and crt
+    FOLabel = label.new(x=bar_index, y=low-ofs, color=color.new(color.yellow,0),style=label.style_triangleup, size=size.tiny)
+    label.set_tooltip(FOLabel, "--------------- \n      ALERT        \n--------------\n DEMAND?SUPPLY AREA \n----------------\n  Alert \n High Volume unable to move the price. Hence it could be a Supply or Demand Area. Evalaute based on the price struture and Price Action")
+//-----------------------------Bar coloring  Code-------------------------------------------------
+
+//Vlp=Param("Volume lookback period",150,20,300,10);
+Vrg=sma(volume,30)// average volume
+rg=(high-close)
+arg=wma(rg,30)
+Vh=volume>volume[1] and volume[1]>volume[2]
+Cloc=close-low
+x=(high-low)/Cloc
+x1=Cloc==0?arg:x
+Vb1 = volume >Vrg or volume > volume[1]
+ucls=x1<2
+dcls=x1>2
+mcls=x1<2.2 and x1>1.8 
+Vlcls=x1>4
+Vhcls=x1<1.35
+upbar = close > close[1]
+dnbar   =  close < close[1]
+CloseUp =  close > close[1]
+CloseDn =  close < close[1]
+VolUp   =  volume > volume[1]
+VolDn   =  volume < volume[1]
+bb1 = upbar and CloseUp and ucls and low > low[1]
+bb2 = upbar and VolUp
+bb3 = dnbar and CloseDn and VolDn
+bb4 = dnbar and CloseDn and close > close[1]
+db1 = dnbar and CloseDn and dcls
+db2 = dnbar and VolUp  
+db3 = upbar and CloseDn and VolUp
+db4 = upbar and CloseDn and close<low[1] and dcls
+db5 = upbar and CloseUp and ucls and low<low[1]
+db6 = upbar and CloseUp and dcls
+bb=(bb1 or bb2 or bb3 or bb4)
+db=(db1 or db2 or db3 or db4 or db5 or db6)
+//mycolor = bb and tls>0? color.green : (db and tls<0? color.red: (bkbg == true ? color.white : color.blue)) 
+mcolor = close > close[1] ? ( volume < sma(volume,60) ?  color.rgb(122, 236, 125) : color.rgb(73, 177, 52)) :( volume < sma(volume,60) ? color.rgb(243, 155, 155): color.rgb(207, 58, 58))
+bgcolor( bkbg == true? color.black : color.white,  editable = false) 
+barcolor(color=mcolor)
+
+//---------------------
+
+
+log_show      = input(true, title = "Show Alert window?",               group = "Alert")
+log_show_msg  = input(2,   title = "# of message to show",    group = "Alert")
+log_offset    = input(0,    title = "# of messages to offset", group = "Alert", step = 1)
+
+// LOGGING FUNCTION ///
+
+var bar_arr  = array.new_int(0)
+var time_arr = array.new_string(0)
+var msg_arr  = array.new_string(0)
+var type_arr = array.new_string(0)
+
+log_msg(message, type) => 
+    //array.push(bar_arr,  bar_index)
+    array.push(time_arr,  tostring(month) + "-" + tostring(dayofmonth) + "  , " + tostring(hour) + ":" + tostring(minute) )
+    array.push(msg_arr,  message)
+    array.push(type_arr, type)
+
+
+
+//  Messages //
+
+if (upThrustBar)
+    log_msg("UpThrust Bar - A Sure sign of weakness", 'weakness')
+    
+if (upThrustBar and not upThrustBartrue)
+    log_msg("UpThrust Bar - A sign of weakness " , 'weakness')
+
+if (upThrustCond1)
+    log_msg("A downbar after an Upthrust. Confirm weakness." , 'weakness')
+    
+if (upThrustCond2 and not upThrustCond1)
+    log_msg("A High Volume downbar after an Upthrust. Confirm weakness." , 'weakness')    
+    
+if (upThrustCond3)
+    log_msg("This upthrust at very High Voume, Confirms weakness" , 'weakness')
+if (PseudoUpThrust)
+    log_msg("Psuedo UpThrust.   A Sign of Weakness." , 'weakness')
+if (pseudoUtCond)
+    log_msg("A Down Bar closing down after a Pseudo Upthrust confirms weakness." , 'weakness')
+if (trendChange)
+    log_msg("High volume Downbar after an upmove on high volume indicates weakness." , 'weakness')
+if (sellCond)
+    log_msg("Possible end of Uptrend and start of Downtrend soon." , 'weakness')
+if (effortUpfail)
+    log_msg("Effort to Move up has failed. Bearish sign." , 'weakness')
+if (bearBar)
+    log_msg("Day's Move Indicates weakness." , 'weakness')
+if (bc)
+    log_msg("Potential Buying climax." , 'weakness')
+if (effortDown)
+    log_msg("Effort to Fall. Bearish sign. " , 'weakness')
+if (tbc4)
+    log_msg("Two Bar Reversal on Higher volume " , 'weakness')
+if (noSupplyBar)
+    log_msg("No Supply. A sign of Strength. " , 'weakness') 
+if (lowVolTest)
+    log_msg("Test for supply.  " , 'strength')    
+if (lowVolTest2)
+    log_msg("An upBar closing near High after a Test confirms strength." , 'strength')     
+if (lowVolTest1)
+    log_msg("Test for supply in a uptrend. Sign of Strength." , 'strength')    
+if (strengthDown1)
+    log_msg("Strength seen returning after a down trend. High volume adds to strength.." , 'strength') 
+if (strengthDown0 and not strengthDown)
+    log_msg("Strength seen returning after a down trend." , 'strength') 
+if (strengthDown and not strengthDown1)
+    log_msg("Strength seen returning after a down trend." , 'strength') 
+if (buyCond)
+    log_msg("Possible end of downtrend and start of uptrend soon.." , 'strength')   
+if (effortDownFail)
+    log_msg("Effort to Move Down has failed. Bulish sign. " , 'strength')     
+if (strengthDown2)
+    log_msg("High volume upBar closing on the high indicates strength. " , 'strength')     
+if (stopVolume)
+    log_msg("Stopping volume. Normally indicates end of bearishness is nearing." , 'strength')     
+if (revUpThrust)
+    log_msg("Reverse upthrust. Indicates strength" , 'strength')   
+if (bullBar )
+    log_msg("Day's Move Indicates strength. " , 'strength')   
+if (tbc2 )
+    log_msg("Two Bar Reversal on Higher volume. " , 'strength')   
+if (tbc2a  )
+    log_msg("Two Bar like Reversal to upside on high volume.  " , 'strength')   
+if (sc  )
+    log_msg(" Possible Selling Climax " , 'strength')   
+if (topRevBar  )
+    log_msg("Top Reversal. Sign of Weakness.  " , 'warning') 
+if (noDemandBarDt  )
+    log_msg("No Demand. upside unlikely soon.  " , 'warning') 
+if (noDemandBarUt  )
+    log_msg("No Demand in a Uptrend. A sign of Weakness.  " , 'warning') 
+if (fom1  )
+    log_msg("High Volume unable to move the price. Could be a Supply / Demand Area " , 'warning') 
+if (tbc2  )
+    log_msg("Two Bar Reversal to upside on High volume. " , 'warning') 
+if (tbc3  )
+    log_msg("Two Bar Reversal to upside on Low volume. " , 'warning') 
+if (tbc4  )
+    log_msg("Two Bar Reversal to upside on High volume. " , 'warning') 
+if (tbc5  )
+    log_msg("Two Bar Reversal to upside on Low volume. " , 'warning') 
+        
+
+
+///////////////////////////////
+// Create and fill log table //
+
+var log_tbl = table.new(position.bottom_left, 3, log_show_msg + 1, frame_color = color.black, frame_width = 1,border_color=color.black,border_width = 1)
+
+if (barstate.islast and log_show)
+    
+    //table.cell(log_tbl, 0, 0, "Bar #",   bgcolor = color.gray, text_size = size.small)
+    table.cell(log_tbl, 1, 0, "TIME",    bgcolor = #9894f7, text_size = size.small)
+    table.cell(log_tbl, 2, 0, "ALERT", bgcolor = #9894f7, text_size = size.small)
+
+    for i = 1 to log_show_msg
+        arr_i = array.size(msg_arr) - log_show_msg + i - 1 - log_offset
+        
+        if (arr_i < 0)
+            break
+        
+        type = array.get(type_arr, arr_i)
+        
+        msg_color =  type == 'strength' ? #c2fc03 : 
+                     type == 'weakness' ? #fa5050 : 
+                     type == 'warning'   ? #f4fc79 : na
+    
+        //table.cell(log_tbl, 0, i, tostring(array.get(bar_arr, arr_i)), bgcolor = msg_color, text_size = size.small)
+        table.cell(log_tbl, 1, i, array.get(time_arr, arr_i),          bgcolor = msg_color, text_size = size.small)
+        table.cell(log_tbl, 2, i, array.get(msg_arr, arr_i),           bgcolor = msg_color, text_size = size.small)
+//======================================================================================
+//--------------------------------- Relative Strength ------------------------------------------------------
+a = close
+len = 22
+bs  = security("cnx500", 'D', close)
+zeroline = 0
+crs = ((a/a[len])/(bs/bs[len]) - 1)
+//zero_color = (crs >= 0) ? color.green : color.orange
+//plot_color = (crs >= 0) ? color.green : color.red 
+fill_color1 = (crs >= 0) ?  color.new(color.green, 80) : color.new(color.red, 80)
+//--------------------------------- Moneyflow----------------------------------------------------------------
+
+TYP  = hlc3
+RMF = TYP*volume 
+PMF = TYP > TYP[1] ? RMF : 0 //PMF:Positive Money Flow///
+NMF = TYP < TYP[1] ? RMF : 0 ///nmf: Negative Money Flow///
+periods = input(22, "period", minval=5, maxval=66, step=1)
+MFR = sum(PMF, periods) / sum(NMF, periods) ///MFR: Money Flow Ratio///
+RMFI  = 100 - (100 / ( 1 + MFR)) 
+JM = wma(RMFI,22)
+RF = (RMFI > JM) ? 1 : 0
+fill_color2 = (RMFI > JM) ?  color.new(color.green, 80) : color.new(color.red, 80)
+//=========================================Strength Band===================================================================
+RPeriod = 14
+Lb = 30
+mySig = rsi(close,14)
+Adev = stdev(mySig, 3*RPeriod)
+jh = highest(mySig,Lb)
+jl = lowest(mySig,Lb)
+jx = jh-jl
+jy = (wma(jx,RPeriod)*0.60)+wma(jl,RPeriod)
+Hiline = jh-jy*0.2
+Loline = jl+jy*0.2
+midline = (jh-jl)/2
+R =  ( 4 * mySig + 3 * mySig[1] + 2 * mySig[2] + mySig[3] ) / 10
+stcolour = R>Hiline ? color.lime : R<Loline ? color.orange : color.blue
+plotshape(strband, "Strength band", color=stcolour, style=shape.square, location=location.bottom, size = size.small, text="")
+//=============================== Bar and Satus Indication ==================================================
+spr = (H-L)
+avspr = sma(spread,40)
+sprst = spr < (avspr*0.6) ? 1 : spr < (avspr*0.9) and spr >(avspr*0.6) ? 2 : spr > (avspr*0.9) and spr < (avspr*1.1) ? 3 : spr > (avspr*1.1) and spr < (avspr*1.5) ?
+     4 : spr > (avspr*1.5) and spr < (avspr*2) ? 5 : 6
+
+var testTable = table.new(position = position.top_right, columns = 3, rows = 3,frame_color = color.black, frame_width = 1, bgcolor = color.white, border_color=color.black,border_width = 1)
+if barstate.islast
+    
+    table.cell(table_id = testTable, column = 0, row = 0, text = ClosePos ==1 ? "Close : Down Close  ": ClosePos == 2 ? "Close : Below Close  " : ClosePos == 3 ? "Close : Mid Close  " :
+     ClosePos == 4 ? "Close : Above Close  ": "Close : UP Close  ", text_size = size.small, bgcolor =  #f4fc79 )
+     
+    table.cell(table_id = testTable, column = 1, row = 0, text = volpos ==1 ? "Volume : Very High  ": volpos == 2 ? "Volume : High     " : volpos == 3 ? "Volume : Above Average  " :
+     volpos == 4 ? "Volume : Less Than Avg  ": "Volume : Low Volume  ", text_size = size.small,  bgcolor =  #f4fc79 )
+     
+    table.cell(table_id = testTable, column = 2, row = 0, text = sprst == 1  ? "Spread : Narrow  ": sprst == 2 ? "Spread : Below Average" : sprst == 3 ? "Spread : Average  " :
+     sprst == 4 ? "Spread : Above Average  ": sprst ==5 ? "Spread = Wide" : "SPread  : Very Wide", text_size = size.small, bgcolor =  #f4fc79 )
+    
+    table.cell(table_id = testTable, column = 0, row = 1, text = upmajor ==1 ? "Major Trend - UP  ": upmajor == -1 ? "Major Trend - DOWN  " : "Major Trend - No Trend" ,
+     text_size = size.small , bgcolor = upmajor ==1 ? #c2fc03 : upmajor == -1 ?  #fa5050 : #f4fc79 )
+     
+    table.cell(table_id = testTable, column = 1, row = 1, text = upmid ==1 ? "Minor Trend - UP  ": dnimd == 1 ? "Minor Trend - DOWN  " : "Minor Tend - No Trend" ,
+     text_size = size.small , bgcolor = upmid ==1 ? #c2fc03 : dnimd == 1 ?  #fa5050 : #f4fc79 ) 
+    
+    table.cell(table_id = testTable, column = 2, row = 1, text = upminor ==1 ? "Immed. Trend - UP  ": dnminor == 1 ? "Immed. Trend - DOWN  " : "Immed. Tend - No Trend" ,
+     text_size = size.small , bgcolor = upminor ==1 ? #c2fc03 : dnminor == 1 ?  #fa5050 : #f4fc79 ) 
+
+    table.cell(table_id = testTable, column = 0, row = 2, text = crs > 0 ? "Rel. Strength Positive ":  "Rel. Strength Negative" ,
+     text_size = size.small , bgcolor = crs > 0 ? #c2fc03 :  #fa5050  )
+     
+    table.cell(table_id = testTable, column = 1, row = 2, text = R>Hiline ? "Abs. Strength Positive  ":  R<Loline ? "Abs. Strength Negative  " : "Abs. Strength Neutral" ,
+     text_size = size.small , bgcolor = R>Hiline ? #c2fc03 : R<Loline ? #fa5050 :#f4fc79 )
+
+    table.cell(table_id = testTable, column = 2, row = 2, text = RMFI>JM ? " Money Flow Positive ":  " Money Flow Negative" ,
+     text_size = size.small , bgcolor = RMFI>JM ?  #c2fc03 :  #fa5050  )
+   
+//---------------------------------------------End of Table --------------------------------------
+
+//============================================================
+
+//====================================================================================|
+//                       Support & Resistance  volume Lines                           |
+//====================================================================================|
+showrs = input(false, "Show support and resistance lines", group="Support & Resistance lines")
+sens = input(10, "Sensitivity", minval=2, maxval=15, group="Support & Resistance lines")
+ph = pivothigh(high, sens, 0)
+pl = pivotlow(low, sens, 0)
+
+var float phl = na
+var float pll = na
+phl := nz(ph) != 0 ? ph : phl[1]
+pll := nz(pl) != 0 ? pl : pll[1]
+plot(showrs ? phl : na, "Period High", color=color.blue, style=plot.style_cross)
+plot(showrs ? pll : na, "Period Low", color=color.red, style=plot.style_cross)
+
+showhighvol = input(false, "Show high volume lines", group="Support & Resistance lines")
+volpd = input(14, "Vol Length", group="Support & Resistance lines")
+volm = input(1.618,"Vol Factor",type=input.float,step=0.1, group="Support & Resistance lines")
+minvol = input(1,"Minimum volume", group="Support & Resistance lines")
+avol = sma(volume, volpd)
+hvol = volume > minvol and volume > volm * avol
+var float hp = na
+var float lp = na
+var float mp = na
+hhv = highest(high,2)
+llv = lowest(low,2)
+hp := hvol ? hhv : hp[1]
+lp := hvol ? llv : lp[1]
+plot(not showhighvol ? na : hp, "HV - High", color=color.olive, style=plot.style_circles, linewidth=2)
+plot(not showhighvol ? na : lp, "HV - Low", color=color.maroon, style=plot.style_circles, linewidth=2)
+
+//====================================================================================|
+//                       End of Support & Resistance volume Lines                     |
+//====================================================================================|
